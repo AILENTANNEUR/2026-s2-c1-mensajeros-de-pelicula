@@ -49,7 +49,7 @@ Determinar **si ese _paquete_ puede ser entregado por una _persona_ en un determ
   - mensajes de los tipos de los obejtos polimorficos
   - quienes usan los mensajes polimórficos
     
-- Dibujar un diagrama estático en que se vea la relación entre los objetos y los tipos polimórficos
+- Dibujar un diagrama estático en que se vea la relación entre los objetos y los tipos polimórficos 
 - Mencionar un mensaje que sea una orden y otro que sea una consulta
 - En tu solución, el mensajero es un atributo del paquete o no? Por qué? Pensar como sería la manera alternativa.
 - Revisá que no haya quedado precálculo en el peso de Sara
