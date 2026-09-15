@@ -1,5 +1,8 @@
-import mensajeria.*
-import mensajeros.*
+
+import mensajero.*
+import paquete.*
+import destino.*
+import vehiculo.*
 
 describe "Mensajeros de Película"
 {
@@ -15,19 +18,19 @@ describe "Mensajeros de Película"
         saraConnor.vehiculo(camion)
         camion.cantidadDeAcoplados(1)
         saraConnor.pesoDeSara(70)
-        assert.notThat(paquete.sePuedeEntregar(150,puenteDeBrooklyn, saraConnor))
+        assert.equals (false, paquete.sePuedeEntregar(150,puenteDeBrooklyn, saraConnor))
     }
-    test "La entrega anterior puede hacerse si Sara usa una moto"{
+    test "La entrega anterior pero Sara usa una moto"{
         saraConnor.vehiculo(moto)
         saraConnor.pesoDeSara(70)
-        assert.equals(true, paquete.sePuedeEntregar(150,puenteDeBrooklyn, saraConnor) )
+        assert.equals(true, paquete.sePuedeEntregar(150,puenteDeBrooklyn, saraConnor))
         
+
+         
     }
-
-
-
-
 }
+
+
 
 
 
