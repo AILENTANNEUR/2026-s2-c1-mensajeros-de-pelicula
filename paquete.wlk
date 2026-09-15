@@ -1,21 +1,18 @@
 import mensajero.* 
-
 object paquete{
+    var property estaPago = false
     
     method precioDelPaquete(destino){
         return destino.precioDelEnvio()
 
     }
-    method estaPago(monto, destino) {
-        return monto >=  self.precioDelPaquete(destino) 
-
-    }
-    method pagaPaquete(monto){
-        return monto 
+    
+    method pagar(){
+        estaPago = true 
     }
 
-    method sePuedeEntregar(monto,destino, mensajero){
-        return self.estaPago(monto, destino) && destino.puedePasarElMensajero(mensajero)
+    method sePuedeEntregar(destino, mensajero){
+        return self.estaPago()  && destino.puedePasarElMensajero(mensajero)
     }
 
 }

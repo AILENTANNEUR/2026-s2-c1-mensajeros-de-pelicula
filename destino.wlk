@@ -4,10 +4,8 @@ object puenteDeBrooklyn{
         return 150
     }
     method puedePasarElMensajero(mensajero) {
-        return  mensajero.peso()
-    }
-    
-
+        return  mensajero.peso() <= 1000
+            }   
 }
 
 object matrix{

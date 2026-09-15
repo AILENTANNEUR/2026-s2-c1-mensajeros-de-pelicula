@@ -10,12 +10,12 @@ object jeanGray{
 }
 
 object neo{
-    var property credito = 100
+    var property tieneCredito = true
      method peso(){
         return 0
      }
     method puedeLlamar(){
-        return credito > 0
+        tieneCredito 
     }
     
     

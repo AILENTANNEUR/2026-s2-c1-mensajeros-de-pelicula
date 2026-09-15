@@ -7,26 +7,27 @@ import vehiculo.*
 describe "Mensajeros de Película"
 {
     test "El paquete de George que no está pago no puede ser llevado por Neo a la matrix."{
-        assert.equals(false, paquete.sePuedeEntregar(120,matrix, neo))
+        assert.equals(false, paquete.sePuedeEntregar(matrix, neo))
     }
 
     test "El paquete de George que sí está pago puede ser llevado por Jean a la matrix"{
-        assert.equals(true, paquete.sePuedeEntregar(500,matrix, jeanGray))
+        paquete.pagar()
+        assert.equals(true, paquete.sePuedeEntregar(matrix, jeanGray))
 
     }
     test "El paquete de George pero no puede ser llevado por Sara (que pesa 70kg) a Brooklyn en un camión con un acoplado "{
+        paquete.pagar()
         saraConnor.vehiculo(camion)
         camion.cantidadDeAcoplados(1)
         saraConnor.pesoDeSara(70)
-        assert.equals (false, paquete.sePuedeEntregar(150,puenteDeBrooklyn, saraConnor))
+        assert.equals (false, paquete.sePuedeEntregar(puenteDeBrooklyn, saraConnor))
     }
     test "La entrega anterior pero Sara usa una moto"{
+        paquete.pagar()
         saraConnor.vehiculo(moto)
         saraConnor.pesoDeSara(70)
-        assert.equals(true, paquete.sePuedeEntregar(150,puenteDeBrooklyn, saraConnor))
+        assert.equals(true, paquete.sePuedeEntregar(puenteDeBrooklyn, saraConnor))
         
-
-         
     }
 }
 
