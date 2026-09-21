@@ -54,11 +54,23 @@ describe "Mensajeros de Película"
             mensajeria.contrata(neo)
             mensajeria.contrata(saraConnor)
             mensajeria.contrata(jeanGray)
-
-            assert.that (mensajeria.esGrande())
-
+            assert.equals(true, mensajeria.esGrande())
         }
+        test "puede ser entregado por el primer empleado de la la empresa de mensajería"{
+            mensajeria.contrata(saraConnor)
+            mensajeria.contrata(jeanGray)
+           assert.equals(false, mensajeria.puedeSerEntregadoPorElPrimero(paquete, matrix))
+        }
+
+        test"El peso del último mensajero"{
+            mensajeria.contrata(neo)
+            mensajeria.contrata(saraConnor)
+            mensajeria.contrata(jeanGray)
+            assert.equals(65, mensajeria.pesoDelUltimo())
+        }
+
     }
+
 
 
 

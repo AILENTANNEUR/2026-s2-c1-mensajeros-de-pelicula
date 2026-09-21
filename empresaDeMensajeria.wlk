@@ -8,21 +8,19 @@ object mensajeria{
     method contrata(mensajero){
         if (! listaDeMensajeros.contains( mensajero )) {
         listaDeMensajeros.add(mensajero)
-    }
+        }
     }
     method despedi(mensajero){
         listaDeMensajeros.remove(mensajero)
-
     }
     method despediATodos(){
         listaDeMensajeros.clear()
     }
     method esGrande(){
-        listaDeMensajeros.size() > 2
-
+        return listaDeMensajeros.size() > 2
     }
-    method puedeSerEntregadoPorElPrimero(unPaquete, destino){
-        return  unPaquete.sePuedeEntregar(destino, listaDeMensajeros.first()) 
+    method puedeSerEntregadoPorElPrimero(algoParaEntregar, destino){
+        return  algoParaEntregar.sePuedeEntregar(destino, listaDeMensajeros.first()) 
     }
     method pesoDelUltimo(){
         return listaDeMensajeros.last().peso()
