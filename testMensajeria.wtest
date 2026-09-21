@@ -3,6 +3,7 @@ import mensajero.*
 import paquete.*
 import destino.*
 import vehiculo.*
+import empresaDeMensajeria.*
 
 describe "Mensajeros de Película"
 {
@@ -30,6 +31,34 @@ describe "Mensajeros de Película"
         
     }
 }
+    describe "segunda parte de los test"
+    {
+        test"contratar a un mensajero"{
+            mensajeria.contrata(neo)
+            
+        }
+
+        test "despedir a un mensajero"{
+            mensajeria.contrata(neo)
+            mensajeria.contrata(saraConnor)
+            mensajeria.despedi(neo)
+        }
+
+        test "despedir a todos los mensajeros"{
+            mensajeria.contrata(neo)
+            mensajeria.contrata(saraConnor)
+             
+        }
+
+        test "es grande la empresa de mensajeria"{
+            mensajeria.contrata(neo)
+            mensajeria.contrata(saraConnor)
+            mensajeria.contrata(jeanGray)
+
+            assert.that (mensajeria.esGrande())
+
+        }
+    }
 
 
 

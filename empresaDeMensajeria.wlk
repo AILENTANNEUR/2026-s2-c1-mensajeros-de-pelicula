@@ -4,14 +4,12 @@ import destino.*
 
 object mensajeria{
     const listaDeMensajeros = []
-    const paqueteresPendientes = []
 
     method contrata(mensajero){
-        if (! listaDeMensajeros.any({ unMensajero => unMensajero == mensajero })) {
+        if (! listaDeMensajeros.contains( mensajero )) {
         listaDeMensajeros.add(mensajero)
     }
     }
-
     method despedi(mensajero){
         listaDeMensajeros.remove(mensajero)
 
@@ -27,7 +25,7 @@ object mensajeria{
         return  unPaquete.sePuedeEntregar(destino, listaDeMensajeros.first()) 
     }
     method pesoDelUltimo(){
-        return listaDeMensajeros.last()({mensajero=> mensajero.peso()})
+        return listaDeMensajeros.last().peso()
     }
     method pesoPromedio(){
         return self.pesoTotalDeMensajeros() / listaDeMensajeros.size()
@@ -36,7 +34,8 @@ object mensajeria{
         return listaDeMensajeros.sum({mensajero => mensajero.peso()})
     }
     method hayAlgunMensajeroQuePuedeEntregar(algoParaEntregar, unDestino){
-        return listaDeMensajeros.any({mensajero => paquete.sePuedeEntregar(unDestino, mensajero)})
+        return listaDeMensajeros.any({mensajero => algoParaEntregar.sePuedeEntregar(unDestino, mensajero)})
     }
 
 }
+
