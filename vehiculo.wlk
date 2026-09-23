@@ -12,4 +12,8 @@ object moto{
     }
 
 }
-
+object sinVehiculo{
+    method pesoDelVehiculo(){
+        return 0
+    }
+}

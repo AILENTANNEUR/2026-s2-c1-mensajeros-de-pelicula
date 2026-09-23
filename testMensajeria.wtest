@@ -8,26 +8,29 @@ import empresaDeMensajeria.*
 describe "Mensajeros de Película"
 {
     test "El paquete de George que no está pago no puede ser llevado por Neo a la matrix."{
-        assert.equals(false, paquete.sePuedeEntregar(matrix, neo))
+        assert.equals(false, paquete.sePuedeEntregar(neo))
     }
 
     test "El paquete de George que sí está pago puede ser llevado por Jean a la matrix"{
         paquete.pagar()
-        assert.equals(true, paquete.sePuedeEntregar(matrix, jeanGray))
+        paquete.destino(matrix)
+        assert.equals(true, paquete.sePuedeEntregar(jeanGray))
 
     }
     test "El paquete de George pero no puede ser llevado por Sara (que pesa 70kg) a Brooklyn en un camión con un acoplado "{
         paquete.pagar()
+        paquete.destino(puenteDeBrooklyn)
         saraConnor.vehiculo(camion)
         camion.cantidadDeAcoplados(1)
         saraConnor.pesoDeSara(70)
-        assert.equals (false, paquete.sePuedeEntregar(puenteDeBrooklyn, saraConnor))
+        assert.equals (false, paquete.sePuedeEntregar(saraConnor))
     }
     test "La entrega anterior pero Sara usa una moto"{
         paquete.pagar()
+        paquete.destino(puenteDeBrooklyn)
         saraConnor.vehiculo(moto)
         saraConnor.pesoDeSara(70)
-        assert.equals(true, paquete.sePuedeEntregar(puenteDeBrooklyn, saraConnor))
+        assert.equals(true, paquete.sePuedeEntregar(saraConnor))
         
     }
 }
@@ -57,9 +60,12 @@ describe "Mensajeros de Película"
             assert.equals(true, mensajeria.esGrande())
         }
         test "puede ser entregado por el primer empleado de la la empresa de mensajería"{
-            mensajeria.contrata(saraConnor)
             mensajeria.contrata(jeanGray)
-           assert.equals(false, mensajeria.puedeSerEntregadoPorElPrimero(paquete, matrix))
+            mensajeria.contrata(neo)
+            neo.tieneCredito(true)
+            paquete.pagar()
+            paquete.destino(matrix)
+            assert.equals(true, mensajeria.puedeSerEntregadoPorElPrimero(paquete))
         }
 
         test"El peso del último mensajero"{
@@ -70,7 +76,89 @@ describe "Mensajeros de Película"
         }
 
     }
+    describe "tercera parte de test"{
+        test "puede ser entregado el paquete por algun mensajero"{
+            mensajeria.contrata(jeanGray)
+            mensajeria.contrata(neo)
+            mensajeria.contrata(saraConnor)
+            paquete.pagar()
+            paquete.destino(matrix)
+            assert.equals(true, mensajeria.hayAlgunMensajeroQuePuedeEntregar(paquete))
+        }
+        test "todos los mensajeros que pueden llevar un paquete"{
+            mensajeria.contrata(jeanGray)
+            mensajeria.contrata(neo)
+            mensajeria.contrata(saraConnor)
+            paquete.pagar()
+            paquete.destino(matrix)
+            assert.equals([jeanGray, neo] ,mensajeria.losQuePuedenLlevar(paquete))
 
+        }
+        
+        test "la mensajeria tiene sobre peso"{
+            mensajeria.contrata(jeanGray)
+            mensajeria.contrata(neo)
+            mensajeria.contrata(saraConnor)
+            saraConnor.pesoDeSara(76)
+            assert.equals(false, mensajeria.pesoPromedio())
+
+        }
+
+        test"la mensajeria envia un paquete, sino puede realizarlo lo agrega a la lista de paquetes pendientes"{
+            mensajeria.contrata(neo)
+            neo.tieneCredito(false)
+            mensajeria.contrata(saraConnor)
+            saraConnor.pesoDeSara(76)
+            saraConnor.vehiculo(moto)
+            paquete.pagar()
+            paquete.destino(matrix)
+            mensajeria.entregar(paquete)
+            assert.equals( [paquete], mensajeria.paquetesPendientes() )
+        }
+
+        test"facturacion de la empresa"{
+            mensajeria.contrata(neo)
+            mensajeria.contrata(saraConnor)
+            saraConnor.pesoDeSara(76)
+            saraConnor.vehiculo(moto)
+            paquete.pagar()
+            paquete.destino(matrix)
+            mensajeria.entregar(paquete)
+            assert.equals([paquete], mensajeria.paquetesEntregados())
+            paqueton.agregar(puenteDeBrooklyn)
+            paqueton.pagoParcial(100)
+            assert.equals(true, paqueton.estaPago())
+            mensajeria.entregar(paqueton)
+            assert.equals([paquete, paqueton], mensajeria.paquetesEntregados())
+            mensajeria.facturacion()
+        }
+        test "enviar un conjunto de paquetes"{
+            mensajeria.contrata(neo)
+            mensajeria.contrata(saraConnor)
+            mensajeria.contrata(jeanGray)
+            saraConnor.pesoDeSara(80)
+            saraConnor.vehiculo(moto)
+            paquete.pagar()
+            mensajeria.entregarTodos([paquetito,paquete])
+            assert.equals([paquetito,paquete], mensajeria.paquetesEntregados())
+        }
+        test"El paquete pendiente más caro y enviarlo, actualizando los pendientes en caso de haberlo podido enviar"{
+            mensajeria.contrata(neo)
+            neo.tieneCredito(false)
+            mensajeria.contrata(saraConnor)
+            saraConnor.pesoDeSara(80)
+            saraConnor.vehiculo(camion)
+            paquete.pagar()
+            paqueton.agregar(matrix)
+            paqueton.agregar(puenteDeBrooklyn)
+            paqueton.pagoParcial(200)
+            mensajeria.entregarTodos([paquete, paqueton])
+            assert.equals([paquete,paqueton], mensajeria.paquetesPendientes())
+            neo.tieneCredito(true)
+            mensajeria.entregarElMasCaro()
+            assert.equals([paquete], mensajeria.paquetesPendientes())
+        }
+    }
 
 
 

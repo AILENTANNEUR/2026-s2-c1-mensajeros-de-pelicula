@@ -15,7 +15,7 @@ object neo{
         return 0
      }
     method puedeLlamar(){
-        tieneCredito 
+        return tieneCredito 
     }
     
     
@@ -23,7 +23,7 @@ object neo{
 
 object saraConnor{
     var property pesoDeSara = 60
-    var property vehiculo = moto
+    var property vehiculo = sinVehiculo
 
     method puedeLlamar(){
         return false
@@ -31,7 +31,15 @@ object saraConnor{
     method peso(){
         return pesoDeSara +  vehiculo.pesoDelVehiculo()
     }
+}
+object ghostRider{
 
+  method puedeLlamar(){
+        return false
+    }
+    method peso(){
+        return  80 +  moto.pesoDelVehiculo()
+    } 
 }
 
 
